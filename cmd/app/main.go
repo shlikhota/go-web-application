@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	chi "github.com/go-chi/chi/v5"
 
@@ -15,6 +17,7 @@ func main() {
 	r := chi.NewRouter()
 	r.Get("/health", h.Health)
 
-	err := http.ListenAndServe(":8080", r)
+	addr := fmt.Sprintf("%s:%s", os.Getenv("HOST"), os.Getenv("PORT"))
+	err := http.ListenAndServe(addr, r)
 	log.Fatal(err)
 }
